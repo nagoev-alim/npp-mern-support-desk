@@ -15,9 +15,7 @@ APP.use(json());
 APP.use(urlencoded({ extended: false }));
 
 APP.get('/', (req, res) => {
-  res
-    .status(200)
-    .json({ message: 'Welcome to the Support Desk API' });
+  res.status(200).json({ message: 'Welcome to the Support Desk API' });
 });
 
 // 🚀 ROUTES ==========================
