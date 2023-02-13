@@ -1,8 +1,13 @@
 const express = require('express');
+const colors = require('colors');
 const { urlencoded, json } = require('express');
 const dotenv = require('dotenv').config();
 const { errorHandler } = require('./middleware/errorMiddleware');
+const connectDB = require('./config/db');
 const PORT = process.env.PORT || 5000;
+
+// Connect to Database
+connectDB();
 
 const APP = express();
 
@@ -17,6 +22,6 @@ APP.get('/', (req, res) => {
 
 // 🚀 ROUTES ==========================
 APP.use('/api/users', require('./routes/useRoutes'));
-APP.use(errorHandler)
+APP.use(errorHandler);
 
-APP.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+APP.listen(PORT, () => console.log(`🚀 Server started on port ${PORT}`.bgGreen.black));
