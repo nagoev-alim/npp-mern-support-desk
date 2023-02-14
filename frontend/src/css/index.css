@@ -1,0 +1,14 @@
+/*@import "base.css";*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .form {
+    @apply p-4 max-w-lg w-full mx-auto grid gap-4
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2  focus:ring-offset-2
+  }
+}
