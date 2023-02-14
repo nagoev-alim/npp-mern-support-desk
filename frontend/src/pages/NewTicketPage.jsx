@@ -1,39 +1,61 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { authSelector } from '../redux/features/auth/authSlice.js';
+import { BackButton, Input, Select, Spinner, Textarea } from '../components/index.js';
+import { resetTicketsState, ticketsCreate, ticketsSelector } from '../redux/features/tickets/ticketsSlice.js';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+
 /* =============================
 📦 COMPONENT - NewTicket
 ============================= */
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { authSelector } from '../redux/features/auth/authSlice.js';
-import { Input, Select, Textarea } from '../components/index.js';
-
-const NewTicket = () => {
+const NewTicketPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const auth = useSelector(authSelector.getAll);
+  const tickets = useSelector(ticketsSelector.getAll);
   const [name] = useState(auth.user.name);
   const [email] = useState(auth.user.email);
   const [product, setProduct] = useState('iPhone');
   const [description, setDescription] = useState('');
+
+  useEffect(() => {
+    if (tickets.isError) {
+      toast.error(tickets.message);
+    }
+    if (tickets.isSuccess) {
+      dispatch(resetTicketsState());
+      navigate('/tickets');
+    }
+    dispatch(resetTicketsState());
+  }, [dispatch, tickets.isError, tickets.isSuccess, navigate, tickets.message]);
 
   /* =============================
    📦 METHODS
    ============================= */
   const onSubmit = (event) => {
     event.preventDefault();
-    // if (product !== description) {
-    //   toast.error('Passwords do not match');
-    //   return;
-    // }
-    // dispatch(registerUser({ name, email, password }));
+    if (description.length === 0) {
+      toast.error('Please fill all required fields');
+      return;
+    }
+    dispatch(ticketsCreate({ product, description }));
   };
 
   /* =============================
   📦 RENDERING
   ============================= */
-  return <div>
-    <div className='grid place-items-center'>
-      <h1 className='flex gap-3 items-center text-2xl font-bold'>
-        Create New Ticket
-      </h1>
-      <p className='font-bold text-neutral-500'>Please fill out the form below</p>
+  if (tickets.isLoading) return <Spinner />;
+
+  return <div className='p-4'>
+    <div className='container mx-auto'>
+      <BackButton url='/' />
+      <div className='grid place-items-center'>
+        <h1 className='flex gap-3 items-center text-2xl font-bold'>
+          Create New Ticket
+        </h1>
+        <p className='font-bold text-neutral-500'>Please fill out the form below</p>
+      </div>
     </div>
 
     <form className='form' onSubmit={onSubmit}>
@@ -79,4 +101,4 @@ const NewTicket = () => {
   </div>;
 };
 
-export default NewTicket;
+export default NewTicketPage;
