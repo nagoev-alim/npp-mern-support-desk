@@ -1,7 +1,7 @@
 /* =============================
-📦 COMPONENT - Input
+📦 COMPONENT - Select
 ============================= */
-const Input = ({ label, type, name, id, value, onChange, placeholder, disabled }) => (
+const Select = ({ label, options, name, id, value, onChange }) => (
   <div className='grid gap-1'>
     <label
       htmlFor={id}
@@ -9,18 +9,17 @@ const Input = ({ label, type, name, id, value, onChange, placeholder, disabled }
     >{label}
     </label>
     <div className=''>
-      <input
+      <select
         className='block p-2 border w-full rounded-md'
-        type={type}
         name={name}
         id={id}
-        placeholder={placeholder}
-        value={value}
         onChange={(e) => onChange(e)}
-        disabled={disabled}
-      />
+        value={value}
+      >
+        {options.map((option, index) => <option key={index} value={option}>{option}</option>)}
+      </select>
     </div>
   </div>
-);
+)
 
-export default Input;
+export default Select;

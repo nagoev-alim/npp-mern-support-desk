@@ -1,7 +1,7 @@
 /* =============================
-📦 COMPONENT - Input
+📦 COMPONENT - Textarea
 ============================= */
-const Input = ({ label, type, name, id, value, onChange, placeholder, disabled }) => (
+const Textarea = ({ label, name, id, value, onChange, placeholder }) => (
   <div className='grid gap-1'>
     <label
       htmlFor={id}
@@ -9,18 +9,16 @@ const Input = ({ label, type, name, id, value, onChange, placeholder, disabled }
     >{label}
     </label>
     <div className=''>
-      <input
-        className='block p-2 border w-full rounded-md'
-        type={type}
+      <textarea
+        className='block p-2 border w-full rounded-md resize-none min-h-[100px]'
         name={name}
         id={id}
         placeholder={placeholder}
-        value={value}
         onChange={(e) => onChange(e)}
-        disabled={disabled}
+        value={value}
       />
     </div>
   </div>
 );
 
-export default Input;
+export default Textarea;
