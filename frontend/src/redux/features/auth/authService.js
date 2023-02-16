@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5000';
+// axios.defaults.baseURL = 'http://localhost:5000';
 
 const USER_URL = '/api/users';
 const USER_LOGIN_URL = '/api/users/login';
