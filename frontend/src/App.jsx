@@ -1,5 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { HomePage, LoginPage, NewTicketPage, PrivateRoute, RegisterPage, TicketsPage } from './pages/index.js';
+import {
+  HomePage,
+  LoginPage,
+  NewTicketPage,
+  PrivateRoute,
+  RegisterPage,
+  TicketPage,
+  TicketsPage,
+} from './pages/index.js';
 import { Header } from './components/index.js';
 import { Toaster } from 'react-hot-toast';
 /* =============================
@@ -19,6 +27,9 @@ const App = () => (
           </Route>
           <Route path='/tickets' element={<PrivateRoute />}>
             <Route path='/tickets' element={<TicketsPage />} />
+          </Route>
+          <Route path='/tickets/:id' element={<PrivateRoute />}>
+            <Route path='/tickets/:id' element={<TicketPage />} />
           </Route>
         </Routes>
       </div>

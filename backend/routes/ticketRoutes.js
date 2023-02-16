@@ -1,11 +1,20 @@
 const { Router } = require('express');
 const { protect } = require('../middleware/authMiddleware');
-const { getTickets, createTicket, getTicket, deleteTicket, updateTicket } = require('../controllers/ticket/ticketController');
+const {
+  getTickets,
+  createTicket,
+  getTicket,
+  deleteTicket,
+  updateTicket,
+} = require('../controllers/ticket/ticketController');
 
 /* =============================
 📦 Создаем Роутер
 ============================= */
 const router = Router();
+
+const noteRouter = require('./noteRoutes');
+router.use('/:ticketId/notes', noteRouter);
 
 /* =============================
 📦 Описываем маршруты
@@ -17,6 +26,6 @@ router.route('/')
 router.route('/:id')
   .get(protect, getTicket)
   .put(protect, updateTicket)
-  .delete(protect, deleteTicket)
+  .delete(protect, deleteTicket);
 
 module.exports = router;

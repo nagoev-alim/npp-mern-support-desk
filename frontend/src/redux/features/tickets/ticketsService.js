@@ -27,6 +27,31 @@ export const ticketsService = {
       return rejectWithValue(message);
     }
   },
+  fetchSingle: async (payload, { rejectWithValue, getState }) => {
+    try {
+      const { data } = await axios.get(`${TICKETS_URL}/${payload}`, {
+        headers: { Authorization: `Bearer ${getState().auth.user.token}` },
+      });
+      return data;
+    } catch (e) {
+      const message = (e.response && e.response.data && e.response.data.message) || e.message || e.toString();
+      return rejectWithValue(message);
+    }
+  },
+  close: async (payload, { rejectWithValue, getState }) => {
+    try {
+      const { data } = await axios.put(
+        `${TICKETS_URL}/${payload}`,
+        { status: 'closed' },
+        {
+          headers: { Authorization: `Bearer ${getState().auth.user.token}` },
+        });
+      return data;
+    } catch (e) {
+      const message = (e.response && e.response.data && e.response.data.message) || e.message || e.toString();
+      return rejectWithValue(message);
+    }
+  },
 };
 
 

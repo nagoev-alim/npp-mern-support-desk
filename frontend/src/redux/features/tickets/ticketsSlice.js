@@ -4,12 +4,15 @@ import { ticketsService } from './ticketsService';
 const CONSTANTS = {
   CREATE: 'tickets.create',
   FETCH_ALL: 'tickets.fetchAll',
+  FETCH_SINGLE: 'tickets.fetchSingle',
+  CLOSE: 'tickets.close',
   LOGOUT: 'tickets.logoutUser',
 };
 
 export const ticketsCreate = createAsyncThunk(CONSTANTS.CREATE, ticketsService.create);
 export const ticketsFetchAll = createAsyncThunk(CONSTANTS.FETCH_ALL, ticketsService.fetchAll);
-// export const logoutUser = createAsyncThunk(CONSTANTS.LOGOUT, ticketsService.logout);
+export const ticketsFetchSingle = createAsyncThunk(CONSTANTS.LOGOUT, ticketsService.fetchSingle);
+export const ticketsClose = createAsyncThunk(CONSTANTS.CLOSE, ticketsService.close);
 
 const initialState = {
   tickets: [],
@@ -54,6 +57,29 @@ const ticketsSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.message = payload;
+    },
+    // Fetch single ticket
+    [ticketsFetchSingle.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [ticketsFetchSingle.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.ticket = payload;
+    },
+    [ticketsFetchSingle.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = payload;
+    },
+    // Close ticket
+    [ticketsClose.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      const id = payload?._id;
+      if (id) {
+        const ticket = state.tickets.find(ticket => ticket._id === id);
+        ticket.status = 'closed';
+      }
     },
   },
 });

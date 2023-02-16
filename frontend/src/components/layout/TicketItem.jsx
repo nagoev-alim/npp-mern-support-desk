@@ -20,7 +20,7 @@ const TicketItem = ({ ticket }) => {
       </span>
     </div>
     <div className='font-bold p-2 text-center border-2'>
-      <Link className='btn bg-neutral-800 hover:bg-neutral-600 focus:ring-neutral-500' to={`/ticket/${ticket._id}`}>
+      <Link className='btn bg-neutral-800 hover:bg-neutral-600 focus:ring-neutral-500' to={`/tickets/${ticket._id}`}>
         View
       </Link>
     </div>
